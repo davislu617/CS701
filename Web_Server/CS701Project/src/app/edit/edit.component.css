@@ -1,0 +1,20 @@
+label{
+    min-inline-size: 30%;
+}
+
+.left{
+    float: left;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.btn-square{
+    min-width: 30px;
+}
+
+.scrollDiv{
+    overflow-y:auto;
+    max-height: 800px;
+}

@@ -1,0 +1,21 @@
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="tripit navbar-brand">TRAVEL PLANNER</a>
+                <p class="navbar-text">Let's go on a <span class='tripit'>TRIP </span>!</p>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                </ul>
+                <p class="navbar-text navbar-right">&nbsp;&nbsp;<span id="username"> {{username}} </span></p>
+                <button class="btn btn-default navbar-btn navbar-right" (click)="logoff()">Log off</button>
+            </div>
+        </div>
+    </nav>
+
+    <router-outlet></router-outlet>

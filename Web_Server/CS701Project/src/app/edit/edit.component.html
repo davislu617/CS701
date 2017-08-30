@@ -1,0 +1,155 @@
+<!-- Edit panel --> 
+<div class="col-sm-6 text scrollDiv">
+  <div id="test"></div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li *ngFor="let travelDay of travelPlan.travelDayList; let i = index" [ngClass]="{'active': i == 0}" role="presentation">
+      <a [attr.href]="'edit/'+travelPlan.id+'/#'+i"  [attr.aria-controls]="i" role="tab" data-toggle="tab">{{travelDay.date|date:shortDate}}</a>
+    </li>
+  </ul>
+  <br><br>
+
+  <div class="col-sm-3">
+  <a class="left" [routerLink]="['/profile']"><button class="btn btn-sm">Go back</button></a>
+  <button class="left btn btn-sm btn-success" (click)="save()">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
+  </div>
+  <div class="col-sm-offset-1 col-sm-6">
+  <h3>
+    <label>Destination: </label>
+    <input [(ngModel)]="travelPlan.destination">
+  </h3>
+  </div>
+  <br><br><br>
+  <hr/>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div *ngFor="let travelDay of travelPlan.travelDayList; let i = index" [ngClass]="{'active': i == 0}" 
+      role="tabpanel" id="{{i}}" class="tab-pane" myDropTarget (myDrop)="onDrop($event,i)">
+      <h4>
+        <label>{{travelDay.date | date:fullDate}}</label>
+        <input type="date" [(ngModel)]="travelDay.date">
+        <button class="btn btn-sm btn-success" (click)="addDay(i)">add a travel day</button>
+      </h4>
+      <hr/>
+      <h4>Transport</h4>
+      <button class="btn btn-sm btn-success" (click)="addTranpsort(i)">add a transport</button>
+      <div class="row" *ngFor="let transport of travelDay.transportList; let j = index">
+        <div class="col-sm-9">
+        <h6>
+          <label>transport: </label>
+          <input [(ngModel)]="transport.name">
+        </h6>
+        <h6>
+          <label>detail: </label>
+          <input [(ngModel)]="transport.detail">
+        </h6>
+        </div>
+        <div class="col-sm-3">
+          <br>
+          <button class="btn btn-xs btn-square btn-danger" (click)='deleteTransport(i,j)'>X</button>
+        </div>
+      </div>
+      <br>
+      <h4>Attraction</h4>
+      <button class="btn btn-sm btn-success" (click)="addAttraction(i)">add an attraction</button>
+      <div class="row" *ngFor="let attraction of travelDay.attractionList; let j = index">
+        <div class="col-sm-9" *ngIf="attraction">
+          <h6>
+            <label>attraction: </label>
+            <input [(ngModel)]="attraction.name">
+          </h6>
+          <h6>
+            <label>location: </label>
+            <input [(ngModel)]="attraction.location">
+          </h6>
+        </div>
+        <div class="col-sm-3">
+          <br>
+          <button class="btn btn-xs btn-square btn-danger" (click)='deleteAttraction(i,j)'>X</button>
+        </div>
+      </div>
+      <br>
+      <h4>Hotel</h4>
+      <button *ngIf="!travelDay.hotel"class="btn btn-sm btn-success" (click)="addHotel(i)">add hotel</button>
+      <div class="row" *ngIf="travelDay.hotel">
+        <div class="col-sm-9">
+        <h6>
+          <label>hotel: </label>
+          <input [(ngModel)]="travelDay.hotel.name">
+        </h6>
+        <h6>
+          <label>location: </label>
+          <input [(ngModel)]="travelDay.hotel.location">
+        </h6>
+        </div>
+        <div class="col-sm-3">
+          <br>
+          <button class="btn btn-xs btn-square btn-danger" (click)='deleteHotel(i)'>X</button>
+        </div>
+      </div>
+      <br>
+      <h4>Other Info</h4>
+      <button class="btn btn-sm btn-success" (click)="addOther(i)">add other information</button>
+      <div class="row" *ngFor="let other of travelDay.otherList; let j = index">
+        <div class="col-sm-9" *ngIf="other">
+          <h6>
+            <label>other: </label>
+            <input [(ngModel)]="other.name">
+          </h6>
+          <h6>
+            <label>detail: </label>
+            <input [(ngModel)]="other.detail">
+          </h6>
+          <h6>
+            <label>location: </label>
+            <input [(ngModel)]="other.location">
+          </h6>
+        </div>
+        <div class="col-sm-3">
+          <br>
+          <button class="btn btn-xs btn-square btn-danger" (click)='deleteOther(i,j)'>X</button>
+        </div>
+      </div>
+      <hr/>
+      <br>
+    </div>
+  </div>
+</div>
+
+<!-- Yelp Panel -->
+<div class="col-sm-6 text scrollDiv">
+  <div class="col-sm-10 alert alert-success">
+    <h5>Explore more! &nbsp;&nbsp;&nbsp;&nbsp;powered by <span class="label label-danger">Yelp</span></h5>
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+    <div class="input-group">
+      <input [(ngModel)]="term" type="text" class="form-control searchForm" placeholder="Search for...">
+      <input [(ngModel)]="location" type="text" class="form-control searchForm" placeholder="Location">
+      <span class="input-group-btn">
+        <button class="btn btn-default" (click)="searchByYelp(term,location)">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+    <br>
+    <div id="progressBar">
+    </div>
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+    <br>
+    <div class="col-sm-12" id="result">
+      <div *ngFor="let result of searchResult; let i = index" class="media">
+        <div class="media-left">
+          <img class="media-object" src={{result.image_url}} alt={{result.id}}>
+        </div>
+        <div class="media-body textColor" [myDraggable]="{data: result}">
+          <h4 class="media-heading">{{result.name}}&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+          <p>{{result.location.address[0]}}, {{result.location.city}}</p>
+          <p>{{result.display_phone}}</p>
+          <p class="text-left">{{result.snippet_text}}
+            <span><a href={{result.mobile_url}} target="_blank">
+              read more</a></span></p>
+        </div>
+        <hr>
+      </div>
+    </div>
+</div>

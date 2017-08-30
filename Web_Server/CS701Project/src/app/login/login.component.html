@@ -1,0 +1,40 @@
+    <div class="content container">
+        <br>
+        <br>
+        <br>
+        <div class="col-xs-8 col-xs-offset-2">
+          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{errorMessage}}</div>
+        </div>
+        <br>
+        <div class="col-xs-8 col-xs-offset-2"><!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#signIn" aria-controls="signIn" role="tab" data-toggle="tab">Sign in</a></li>
+                <li role="presentation"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Sign up</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="signIn">
+                    <div class="input-group input-group-lg">
+                        <form>
+                            <input type="text" #lusername class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
+                            <input type="password" #lpassword class="form-control" placeholder="Password" aria-describedby="sizing-addon1">
+                            <input type="button" value="Sign in" class="btn btn-primary" 
+                                (click)="login(lusername.value,lpassword.value)">
+                        </form>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="signUp">
+                    <div class="input-group input-group-lg">
+                        <form>
+                            <input type="text" #username class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
+                            <input type="password" #password class="form-control" placeholder="Password" aria-describedby="sizing-addon1">
+                            <input type="email" #email class="form-control" placeholder="Email Address" aria-describedby="sizing-addon1">
+                            <input type="button" value="Sign up" class="btn btn-primary"
+                                (click)="signup(username.value,password.value,email.value)">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+              
+    </div>

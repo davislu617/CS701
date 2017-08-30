@@ -1,0 +1,92 @@
+<div class="content container">
+  <div id="content-left" class="col-sm-3">
+    <h3 class="text">Travel Plans</h3>
+    <hr/>
+    <button class="col-sm-offset-2 btn btn-sm btn-success" (click)="showForAdd=!showForAdd">add a new plan</button>
+    <br>
+    <div *ngIf="showForAdd">
+      <input #destination type="text" class="form-control" placeholder="Destination">
+      <input #date type="date" class="form-control" placeholder="date">
+      <button class="btn btn-default" (click)="addTrip(destination.value,date.value)">Add</button>
+    </div>
+    <br>
+    <div *ngFor="let plan of travelPlanList; let i = index">
+      <div class="col-sm-8">
+        <h4 class="text">{{plan.destination}}</h4>
+        <h5 class="text">{{plan.travelDayList[0].date | date:mediumDate}}</h5>
+      </div>
+      <div class="col-sm-4">
+        <button *ngIf="showForBtn[i]" class="btn btn-sm btn-primary" (click)="viewPlan(i)">view</button>
+        <a *ngIf="!showForBtn[i]" [routerLink]="['/edit',plan.id]">
+          <button class="btn btn-sm btn-warning">edit</button>
+        </a>
+      </div>
+      <br>
+      <br>
+      <br>
+    </div>
+  </div>
+
+  <div *ngIf="showForView[0]" id="content-middle" class="col-sm-3 text">
+    <div *ngFor="let travelDay of travelDayListEven">
+      <h4>{{travelDay.date | date:fullDate}}</h4>
+      <hr/>
+      <h4>Transport</h4>
+      <div *ngFor="let transport of travelDay.transportList">
+        <h6>{{transport.name}}</h6>
+        <h6>{{transport.detail}}</h6>
+      </div>
+      <br>
+      <h4>Attraction</h4>
+      <div *ngFor="let attraction of travelDay.attractionList">
+        <h6>{{attraction.name}}</h6>
+        <h6>{{attraction.location}}</h6>
+      </div>
+      <br>
+      <h4>Hotel</h4>
+      <div *ngIf="travelDay.hotel">
+        <h6>{{travelDay.hotel.name}}</h6>
+        <h6>{{travelDay.hotel.location}}</h6>
+      </div>
+      <br>
+      <h4>Other Info</h4>
+      <div *ngFor="let other of travelDay.otherList">
+        <h6>{{other.name}}</h6>
+        <h6>{{other.detail}}</h6>
+        <h6>{{other.location}}</h6>
+      </div>
+      <hr/>
+    </div>
+  </div>
+
+  <div *ngIf="showForView[1]" id="content-middle2" class="col-sm-3 text">
+    <div *ngFor="let travelDay of travelDayListOdd">
+      <h4>{{travelDay.date | date:fullDate}}</h4>
+      <hr/>
+      <h4>Transport</h4>
+      <div *ngFor="let transport of travelDay.transportList">
+        <h6>{{transport.name}}</h6>
+        <h6>{{transport.detail}}</h6>
+      </div>
+      <br>
+      <h4>Attraction</h4>
+      <div *ngFor="let attraction of travelDay.attractionList">
+        <h6>{{attraction.name}}</h6>
+        <h6>{{attraction.location}}</h6>
+      </div>
+      <br>
+      <h4>Hotel</h4>
+      <div *ngIf="travelDay.hotel">
+        <h6>{{travelDay.hotel.name}}</h6>
+        <h6>{{travelDay.hotel.location}}</h6>
+      </div>
+      <br>
+      <h4>Other Info</h4>
+      <div *ngFor="let other of travelDay.otherList">
+        <h6>{{other.name}}</h6>
+        <h6>{{other.detail}}</h6>
+        <h6>{{other.location}}</h6>
+      </div>
+      <hr/>
+    </div>
+  </div>
